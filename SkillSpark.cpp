@@ -73,6 +73,7 @@ public:
                 cout << "\t\t\t\t\tInvalid Credentials" << endl;
                 goto ren;
             }
+            chkuser.close();
         }
         else
         {
@@ -82,13 +83,33 @@ public:
             user_login(re);
         }
     }
+
+    void user_contribution()
+    {
+        ofstream qstore("usercontri.txt", ios::app);
+        qstore << username << "\n";
+        string que;
+        while (true)
+        {
+            if (que == ".")
+            {
+                qstore << "\n";
+                cout << "Thank You for Your Contribution !" << endl;
+                break;
+            }
+            else
+            {
+                getline(cin, que);
+                qstore << que << "\n";
+            }
+        }
+    }
 };
 
 class test : public user
 {
 private:
 public:
-
 };
 
 int main()
@@ -118,19 +139,20 @@ int main()
         cout << "\t\t\t\t\t\tWhat do you want to do??" << endl;
         cout << "\n\t\t\t   1.Practice 2.Compete 3.Contribute 4.Display Statistic 5.Create Test" << endl;
     rechoice:
-        cout << "\t\t\t\t\t    Please Enter Number of Your Choice";
+        cout << "\t\t\t\t\t    Please Enter Number of Your Choice   ";
         cin >> choice;
         cout << "\n";
 
         if (choice == 1)
         {
-            
         }
         else if (choice == 2)
         {
         }
         else if (choice == 3)
         {
+            cout << "Enter . to getting back to main menu" << endl;
+            u.user_contribution();
         }
         else if (choice == 4)
         {
