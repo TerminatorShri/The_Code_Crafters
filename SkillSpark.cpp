@@ -5,7 +5,7 @@ using namespace std;
 
 class user
 {
-private:
+protected:
     string username, password, current_user;
 
 public:
@@ -84,22 +84,25 @@ public:
     }
 };
 
-class test
+class test : public user
 {
 private:
 public:
+
 };
 
 int main()
 {
     char user_status;
+    int choice;
     user u;
+    test t;
 
     system("cls");
     cout << "\t\t\t SKILLSPARK : Igniting Interview Success through Practice and Skill Enhancement" << endl;
     cout << "\n";
     cout << "\t\tWelcome to a comprehensive practice platform designed to empower you with enhanced skills before your interviews, facilitating your professional growth & maximizing your chances of success. With a focus on skill development, this project offers you a range of practice exercises and resources to prepare for their upcoming interviews." << endl;
-    cout << "___________________________________________________________________________________________________________________________" << endl;
+    cout << "__________________________________________________________________________________________________________________________" << endl;
     cout << "\n";
 
     cout << "\t\t\t\t\t\t Are you a new user?(Y/N)   ";
@@ -107,7 +110,42 @@ int main()
 
     u.user_login(user_status);
 
-    cout << "___________________________________________________________________________________________________________________________" << endl;
+    cout << "__________________________________________________________________________________________________________________________" << endl;
+    cout << "\n";
 
+    while (true)
+    {
+        cout << "\t\t\t\t\t\tWhat do you want to do??" << endl;
+        cout << "\n\t\t\t   1.Practice 2.Compete 3.Contribute 4.Display Statistic 5.Create Test" << endl;
+    rechoice:
+        cout << "\t\t\t\t\t    Please Enter Number of Your Choice";
+        cin >> choice;
+        cout << "\n";
+
+        if (choice == 1)
+        {
+            
+        }
+        else if (choice == 2)
+        {
+        }
+        else if (choice == 3)
+        {
+        }
+        else if (choice == 4)
+        {
+        }
+        else if (choice == 5)
+        {
+        }
+        else if (choice == 6)
+        {
+            cout << "\t\t\t\tThank You! Visit Again" << endl;
+        }
+        else
+        {
+            goto rechoice;
+        }
+    }
     return 0;
 }
