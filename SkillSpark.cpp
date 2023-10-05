@@ -295,12 +295,12 @@ public:
         }
         if (score >= 0 && score <= 4)
         {
-            cout << "\nYour score is " << score << endl;
+            cout << "Your score is " << score << endl;
             cout << "Please Go through solutions to check where you went wrong ... " << endl;
         }
         else if (score == 5)
         {
-            cout << "congratulations ! You were able to solve all questions correctly " << endl;
+            cout << "Congratulations ! You were able to solve all questions correctly " << endl;
         }
         // practice_result_store();
     }
@@ -321,8 +321,8 @@ private:
 public:
     void compete_info()
     {
-        cout << "Please Enter Information of Player 1 : " << endl;
-        cout << "Are You a New User ?(Y/N) ";
+        cout << "\t\t\tPlease Enter Information of Player 1 : " << endl;
+        cout << "\t\t\tAre You a New User ?(Y/N) ";
         cin >> status;
         if (status == 'Y')
         {
@@ -444,7 +444,6 @@ public:
 
     void compete_result_store(int s1, int s2)
     {
-        
     }
 };
 
