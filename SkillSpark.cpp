@@ -6,6 +6,7 @@
 #include <climits>
 #include <ctime>
 #include <vector>
+#include <set>
 #include "json.hpp"
 using namespace std;
 using json = nlohmann::json;
@@ -305,6 +306,7 @@ public:
             }
             else if (choice == 3)
             {
+
                 break;
             }
             else
@@ -319,7 +321,7 @@ public:
 class practice : public user
 {
 private:
-    string skill, difficulty;
+    string skill, difficulty, set_to_solve = "";
     vector<string> ans;
     int score = 0;
 
@@ -364,12 +366,93 @@ public:
             break;
         }
     }
+    // string set_getter(const string &username, const string &difficulty ,const string &skill)
+    // {
+    //     ifstream check("userdata.json");
+    //     json set_check = json::parse(check);
+    //     json data = set_check[username]["practice"][skill][difficulty];
+    //     json set_solved = data["solved"];
+    //     int cnt = 0;
+    //     string ans = "";
+    //     for (int i = 0; i < set_solved.size(); i++)
+    //     {
+    //         string now = set_solved[i].get<string>();
+    //         if (now == "set1" || now == "set2" || now == "set3" || now == "set4" || now == "set5")
+    //             cnt++;
+    //     }
+    //     cout << cnt << endl;
+    //     if (difficulty == "Easy")
+    //     {
+    //         if (cnt == 5)
+    //         {
+    //             ans = "set1";
+    //         }
+    //         else
+    //         {
+    //             ans += "set";
+    //             ans += to_string(cnt + 1);
+    //         }
+    //     }
+    //     else if (difficulty == "Medium")
+    //     {
+    //         if (cnt == 4)
+    //         {
+    //             ans += "set1";
+    //         }
+    //         else
+    //         {
+    //             ans += "set";
+    //             ans += to_string(cnt + 1);
+    //         }
+    //     }
+    //     else if (difficulty == "Hard")
+    //     {
+    //         if (cnt == 3)
+    //         {
+    //             ans += "set1";
+    //         }
+    //         else
+    //         {
+    //             ans += "set";
+    //             ans += to_string(cnt + 1);
+    //         }
+    //     }
+    //     return ans;
+    // }
+    string set_getter_practice(const string &username, const string &skill, const string &difficulty)
+    {
+        ifstream read("format.json");
+        json set_check = json::parse(read), data;
+        string ans = "";
+        if (set_check[username]["practice"].find(skill) != set_check[username]["practice"].end())
+        {
+            data = set_check[username]["practice"][skill];
+            for (auto it = data.begin(); it != data.end(); it++)
+            {
+                string curr_difficulty = it.key();
+                if (curr_difficulty == difficulty)
+                {
+                    json curr_data = it.value();
+                    json set_solved = curr_data["solved"];
+                    cout << set_solved.size() << endl;
+                    ans += "set" + to_string(set_solved.size() + 1);
+                }
+            }
+        }
+        else
+        {
+            ans = "set1";
+        }
+        return ans;
+    }
 
     void practice_display()
     {
+        set_to_solve = set_getter_practice(username, difficulty, skill);
         ifstream pracread("format.json");
         json que_data = json::parse(pracread);
-        json data = que_data[difficulty]["set0"]["questions"];
+        cout << set_to_solve << endl;
+        json data = que_data[skill][difficulty][set_to_solve]["questions"];
         string que, temp;
         int cnt = 0;
         cout << "Let's start with your test" << endl;
@@ -480,6 +563,7 @@ public:
 
     void compete_display()
     {
+        string to_solve = "set" + to_string(1 + (rand() % 6));
         ifstream competedis("compete.json");
         json que_read = json::parse(competedis);
         json data = que_read["set0"]["questions"];
