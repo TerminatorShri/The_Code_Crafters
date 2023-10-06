@@ -3,6 +3,7 @@
 #include <math.h>
 #include <fstream>
 #include <chrono>
+#include <climits>
 #include <ctime>
 #include <vector>
 #include "json.hpp"
@@ -11,7 +12,7 @@ using json = nlohmann::json;
 
 class user
 {
-private:
+protected:
     string username, password;
     char user_status;
 
@@ -207,6 +208,111 @@ public:
 
     void user_statistics()
     {
+        ifstream statdis("userdata.json");
+        json stat_read = json::parse(statdis), data;
+        string skill_to_display = "";
+        int choice;
+        while (true)
+        {
+            cout << "Select Domain for which statistics to be displayed => " << endl
+                 << "1.Practice" << setw(15) << "2.Compete" << setw(10) << "3.Exit" << endl;
+            cin >> choice;
+            if (choice == 1)
+            {
+                skill_to_display = "";
+                cout << "Enter Skill for which Statistics to be displayed=>" << endl
+                     << "1.Skill1" << setw(5) << "2.Skill2" << setw(5) << "3.Skill3" << setw(5) << "4.Slill4" << setw(5) << "5.Skill5" << endl;
+                cin >> choice;
+                cout << endl;
+                if (choice == 1)
+                    skill_to_display = "skill1";
+                else if (choice == 2)
+                    skill_to_display = "skill2";
+                else if (choice == 3)
+                    skill_to_display = "skill3";
+                else if (choice == 4)
+                    skill_to_display = "skill4";
+                else if (choice == 5)
+                    skill_to_display = "skill5";
+                else
+                    skill_to_display = "";
+                if (!skill_to_display.empty())
+                {
+                    if (stat_read[username]["practice"].find(skill_to_display) != stat_read[username]["practice"].end())
+                    {
+                        data = stat_read[username]["practice"][skill_to_display];
+                        cout << "Displaying Statistics for : " << skill_to_display << endl;
+                        for (auto it = data.begin(); it != data.end(); it++)
+                        {
+                            string curr_difficulty = it.key();
+                            json curr_data = it.value();
+                            json data_of_solved = curr_data["solved"];
+                            json data_of_score = curr_data["score"];
+                            int set_solved = data_of_solved.size();
+                            double score_till = 0.0;
+                            for (int i = 0; i < set_solved; i++)
+                            {
+                                if (data_of_score[i].is_number())
+                                {
+                                    score_till += data_of_score[i].get<double>();
+                                }
+                            }
+                            double average_score = score_till / set_solved;
+                            double percentage = (static_cast<double>(set_solved) / 5) * 100.0;
+                            cout << "Difficulty Level : " << curr_difficulty << endl;
+                            cout << "Solving Completed (in %) : " << percentage << endl;
+                            cout << "Average Score : " << average_score << endl;
+                            cout << endl;
+                        }
+                    }
+                    else
+                    {
+                        cout << "No Statistics to Display for : " << skill_to_display << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Wrong Choice ! Please Enter right choice number" << endl;
+                }
+            }
+            else if (choice == 2)
+            {
+                data = stat_read[username]["compete"];
+                int total_pvp = data.size();
+                int won = 0;
+                int curr_streak = 0, max_streak = INT_MIN;
+                for (auto &it : data)
+                {
+                    if (it.is_boolean())
+                    {
+                        if (it.get<bool>())
+                        {
+                            won++;
+                            curr_streak++;
+                        }
+                        else if (!it.get<bool>())
+                        {
+                            curr_streak = 0;
+                        }
+                        max_streak = max(max_streak, curr_streak);
+                    }
+                }
+                double win_percent = (static_cast<double>(won) / total_pvp) * 100.0;
+                cout << "Matches Won : " << won << "[out of " << total_pvp << "]" << endl;
+                cout << "Win Percentage in Compete for " << username << " is : " << win_percent << endl;
+                cout << "Maximum winning streak is : " << max_streak << endl;
+                cout << endl;
+            }
+            else if (choice == 3)
+            {
+                break;
+            }
+            else
+            {
+                cout << "Wrong choice selection!" << endl;
+                continue;
+            }
+        }
     }
 };
 
@@ -263,7 +369,7 @@ public:
     {
         ifstream pracread("format.json");
         json que_data = json::parse(pracread);
-        json data = que_data["Easy"]["set0"]["questions"];
+        json data = que_data[difficulty]["set0"]["questions"];
         string que, temp;
         int cnt = 0;
         cout << "Let's start with your test" << endl;
