@@ -2,6 +2,7 @@
 #include <string>
 #include <math.h>
 #include <fstream>
+#include <cstdlib>
 #include <chrono>
 #include <climits>
 #include <ctime>
@@ -316,18 +317,28 @@ public:
             }
         }
     }
+    string send_user_credentials()
+    {
+        return username;
+    }
+    int get_random_set(int n)
+    {
+        srand(time(0));
+        return rand() % n + 1;
+    }
 };
 
-class practice : public user
+class practice : protected user
 {
 private:
-    string skill, difficulty, set_to_solve = "";
+    string skill, difficulty, set_to_solve = "", user_now;
     vector<string> ans;
     int score = 0;
 
 public:
-    void practise_choice()
+    void practise_choice(string user_now)
     {
+        this->user_now = user_now;
         int s, d;
         cout << "Enter Number of Skill which you want to Practice on : " << endl;
         cout << "1.Skill1 2.Skill2 3.Skill3 4.Skill4 5.Skill5 " << endl;
@@ -366,80 +377,24 @@ public:
             break;
         }
     }
-    // string set_getter(const string &username, const string &difficulty ,const string &skill)
-    // {
-    //     ifstream check("userdata.json");
-    //     json set_check = json::parse(check);
-    //     json data = set_check[username]["practice"][skill][difficulty];
-    //     json set_solved = data["solved"];
-    //     int cnt = 0;
-    //     string ans = "";
-    //     for (int i = 0; i < set_solved.size(); i++)
-    //     {
-    //         string now = set_solved[i].get<string>();
-    //         if (now == "set1" || now == "set2" || now == "set3" || now == "set4" || now == "set5")
-    //             cnt++;
-    //     }
-    //     cout << cnt << endl;
-    //     if (difficulty == "Easy")
-    //     {
-    //         if (cnt == 5)
-    //         {
-    //             ans = "set1";
-    //         }
-    //         else
-    //         {
-    //             ans += "set";
-    //             ans += to_string(cnt + 1);
-    //         }
-    //     }
-    //     else if (difficulty == "Medium")
-    //     {
-    //         if (cnt == 4)
-    //         {
-    //             ans += "set1";
-    //         }
-    //         else
-    //         {
-    //             ans += "set";
-    //             ans += to_string(cnt + 1);
-    //         }
-    //     }
-    //     else if (difficulty == "Hard")
-    //     {
-    //         if (cnt == 3)
-    //         {
-    //             ans += "set1";
-    //         }
-    //         else
-    //         {
-    //             ans += "set";
-    //             ans += to_string(cnt + 1);
-    //         }
-    //     }
-    //     return ans;
-    // }
-    string set_getter_practice(const string &username, const string &skill, const string &difficulty)
+
+    string set_getter_practice(const string &skill, const string &difficulty)
     {
-        ifstream read("format.json");
-        json set_check = json::parse(read), data;
+        ifstream statdis("userdata.json");
+        json stat_read = json::parse(statdis), data;
         string ans = "";
-        if (set_check[username]["practice"].find(skill) != set_check[username]["practice"].end())
+        cout << user_now << endl;
+        if (stat_read[user_now]["practice"].find(skill) != stat_read[user_now]["practice"].end())
         {
-            data = set_check[username]["practice"][skill];
+            cout << "Im in" << endl;
+            data = stat_read[username]["practice"][skill];
             for (auto it = data.begin(); it != data.end(); it++)
             {
                 string curr_difficulty = it.key();
-                if (curr_difficulty == difficulty)
-                {
-                    json curr_data = it.value();
-                    json set_solved = curr_data["solved"];
-                    cout << set_solved.size() << endl;
-                    ans += "set" + to_string(set_solved.size() + 1);
-                }
+                cout << curr_difficulty << endl;
             }
         }
-        else
+        if (ans == "")
         {
             ans = "set1";
         }
@@ -448,7 +403,7 @@ public:
 
     void practice_display()
     {
-        set_to_solve = set_getter_practice(username, difficulty, skill);
+        set_to_solve = set_getter_practice(skill, difficulty);
         ifstream pracread("format.json");
         json que_data = json::parse(pracread);
         cout << set_to_solve << endl;
@@ -464,6 +419,7 @@ public:
             cin >> temp;
             ans.push_back(temp);
         }
+        pracread.close();
     }
 
     void practise_result()
@@ -502,8 +458,8 @@ public:
 class compete : public user
 {
 private:
-    string user1, user2, pass1, pass2;
-    int flag = 0;
+    string user1, user2, pass1, pass2, set;
+    int flag = 0, random_num = 1;
     char status;
     vector<string> ans;
 
@@ -545,6 +501,8 @@ public:
                 }
                 if (user_check(user2, pass2))
                 {
+                    random_num = get_random_set(6);
+                    set = "set" + to_string(random_num);
                     compete_display();
                 }
                 else
@@ -563,10 +521,9 @@ public:
 
     void compete_display()
     {
-        string to_solve = "set" + to_string(1 + (rand() % 6));
         ifstream competedis("compete.json");
         json que_read = json::parse(competedis);
-        json data = que_read["set0"]["questions"];
+        json data = que_read[set]["questions"];
         int cnt = 1;
         string temp, que;
         for (auto it = data.begin(); it != data.end(); ++it)
@@ -594,15 +551,15 @@ public:
                 break;
             }
         }
+        competedis.close();
     }
 
     void compete_result()
     {
-        string temp;
         int score1 = 0, score2 = 0, cnt = 0;
         ifstream competeans("compete.json");
         json ans_read = json::parse(competeans);
-        json data = ans_read["set0"]["answers"];
+        json data = ans_read[set]["answers"];
         string real_ans;
         for (auto it = data.begin(); it != data.end(); ++it)
         {
@@ -630,10 +587,33 @@ public:
             cout << user2 << " takes the Win ! Congratulations !" << endl;
         else
             cout << "Oh! It's a Tie...Well Played Both of You" << endl;
+        competeans.close();
+        compete_result_store(score1, score2);
     }
 
     void compete_result_store(int s1, int s2)
     {
+        ifstream compete_read("userdata.json");
+        json data = json::parse(compete_read);
+        if (s1 == s2)
+        {
+            data[user1]["compete"].push_back(true);
+            data[user2]["compete"].push_back(true);
+        }
+        else if (s1 > s2)
+        {
+            data[user1]["compete"].push_back(true);
+            data[user2]["compete"].push_back(false);
+        }
+        else if (s2 > s1)
+        {
+            data[user1]["compete"].push_back(true);
+            data[user2]["compete"].push_back(true);
+        }
+        compete_read.close();
+        ofstream compete_write("userdata.json");
+        compete_write << data;
+        compete_write.close();
     }
 };
 
@@ -660,7 +640,8 @@ int main()
 
         if (choice == 1)
         {
-            p.practise_choice();
+            string user_info = u.send_user_credentials();
+            p.practise_choice(user_info);
             p.practice_display();
             p.practise_result();
         }
