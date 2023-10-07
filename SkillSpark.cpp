@@ -32,7 +32,7 @@ public:
         cout << "\t\t\t SKILLSPARK : Igniting Interview Success through Practice and Skill Enhancement" << endl;
         cout << "\n";
         cout << "\t\tWelcome to a comprehensive practice platform designed to empower you with enhanced skills before your interviews, facilitating your professional growth & maximizing your chances of success. With a focus on skill development, this project offers you a range of practice exercises and resources to prepare for their upcoming interviews." << endl;
-        cout << "___________________________________________________________________________________________________________________________________________" << endl;
+        cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
         cout << "\n";
     }
 
@@ -69,7 +69,7 @@ public:
                     cin >> password_confirm;
                     if (password != password_confirm)
                     {
-                        cout << "Password doesn't match" << endl;
+                        cout << "\n\t\t\t\t\tPassword doesn't match" << endl;
                         flag1 = 0;
                     }
                     else
@@ -86,16 +86,16 @@ public:
             reguser << "\n"
                     << username << " " << password;
             reguser.close();
-            cout << "\t\t\t\t\tUsername Created Successfully" << endl;
+            cout << "\n\t\t\t\t\tUsername Created Successfully" << endl;
         }
         else if (user_status == 'N')
         {
             int flag1 = 0;
             while (true)
             {
-                cout << "\t\t\t\t\tPlease Enter Your Username ";
+                cout << "\t\t\t\t\t\tPlease Enter Your Username : ";
                 cin >> username;
-                cout << "\t\t\t\t\tPlease Enter Your Password ";
+                cout << "\t\t\t\t\t\tPlease Enter Your Password : ";
                 cin >> password;
                 if (user_check(username, password))
                 {
@@ -103,11 +103,12 @@ public:
                 }
                 else
                 {
-                    cout << "\t\t\t\t\tInvalid Credentials" << endl;
+                    cout << "\t\t\t\t\t\tInvalid Credentials" << endl;
                 }
                 if (flag1 == 1)
                 {
-                    cout << "\t\t\t\t\tWelcome Back >>>>" << username << "<<<<" << endl;
+                    cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                    cout << "\n\t\t\t\t\t\t  Welcome Back >>>>" << username << "<<<<" << endl;
                     break;
                 }
             }
@@ -155,7 +156,6 @@ public:
             }
         }
         qstore.close();
-        cout << "__________________________________________________________________________________________________________________________" << endl;
         cout << "\n";
     }
 
@@ -188,7 +188,7 @@ public:
                 cin >> password_confirm;
                 if (password != password_confirm)
                 {
-                    cout << "Password doesn't match" << endl;
+                    cout << "\n\t\t\t\t\tPassword doesn't match" << endl;
                     flag1 = 0;
                 }
                 else
@@ -216,16 +216,25 @@ public:
         int choice;
         while (true)
         {
-            cout << "Select Domain for which statistics to be displayed => " << endl
-                 << "1.Practice" << setw(15) << "2.Compete" << setw(10) << "3.Exit" << endl;
+            cout << "\n\t\t\t\t\tSelect Domain for which statistics to be displayed => " << endl
+                 << "\n\t\t\t\t\t\t1.Practice" << endl
+                 << "\t\t\t\t\t\t2.Compete" << endl
+                 << "\t\t\t\t\t\t3.Exit" << endl;
+            cout << endl;
+            cout << "\t\t\t\t\tPlease Enter Number of Your Choice : ";
             cin >> choice;
             if (choice == 1)
             {
                 skill_to_display = "";
-                cout << "Enter Skill for which Statistics to be displayed=>" << endl
-                     << "1.Skill1" << setw(5) << "2.Skill2" << setw(5) << "3.Skill3" << setw(5) << "4.Slill4" << setw(5) << "5.Skill5" << endl;
-                cin >> choice;
+                cout << "\n\t\t\t\t\tEnter Skill for which Statistics to be displayed=>" << endl
+                     << "\n\t\t\t\t\t\t1.SKILL_1" << endl
+                     << "\t\t\t\t\t\t2.SKILL_2" << endl
+                     << "\t\t\t\t\t\t3.SKILL_3" << endl
+                     << "\t\t\t\t\t\t4.SKILL_4" << endl
+                     << "\t\t\t\t\t\t5.SKILL_5" << endl;
                 cout << endl;
+                cout << "\t\t\t\t\tPlease Enter Number of Your Choice : ";
+                cin >> choice;
                 if (choice == 1)
                     skill_to_display = "skill1";
                 else if (choice == 2)
@@ -240,10 +249,11 @@ public:
                     skill_to_display = "";
                 if (!skill_to_display.empty())
                 {
+                    cout << "\n\t\t\t\t\t\t****************" << endl;
                     if (stat_read[username]["practice"].find(skill_to_display) != stat_read[username]["practice"].end())
                     {
                         data = stat_read[username]["practice"][skill_to_display];
-                        cout << "Displaying Statistics for : " << skill_to_display << endl;
+                        cout << "\n\t\t\t\t\tDisplaying Statistics for : " << skill_to_display << endl;
                         for (auto it = data.begin(); it != data.end(); it++)
                         {
                             string curr_difficulty = it.key();
@@ -261,20 +271,21 @@ public:
                             }
                             double average_score = score_till / set_solved;
                             double percentage = (static_cast<double>(set_solved) / 5) * 100.0;
-                            cout << "Difficulty Level : " << curr_difficulty << endl;
-                            cout << "Solving Completed (in %) : " << percentage << endl;
-                            cout << "Average Score : " << average_score << endl;
+                            cout << "\t\t\t\t\tDifficulty Level : " << curr_difficulty << endl;
+                            cout << "\t\t\t\t\tSolving Completed (in %) : " << percentage << endl;
+                            cout << "\t\t\t\t\tAverage Score : " << average_score << endl;
                             cout << endl;
                         }
                     }
                     else
                     {
-                        cout << "No Statistics to Display for : " << skill_to_display << endl;
+                        cout << "\n\t\t\t\t\tNo Statistics to Display for : " << skill_to_display << endl;
                     }
+                    cout << "\t\t\t\t\t\t****************" << endl;
                 }
                 else
                 {
-                    cout << "Wrong Choice ! Please Enter right choice number" << endl;
+                    cout << "\n\t\t\t\t\tWrong Choice ! Please Enter right choice number" << endl;
                 }
             }
             else if (choice == 2)
@@ -300,10 +311,11 @@ public:
                     }
                 }
                 double win_percent = (static_cast<double>(won) / total_pvp) * 100.0;
-                cout << "Matches Won : " << won << "[out of " << total_pvp << "]" << endl;
-                cout << "Win Percentage in Compete for " << username << " is : " << win_percent << endl;
-                cout << "Maximum winning streak is : " << max_streak << endl;
-                cout << endl;
+                cout << "\n\t\t\t\t\t\t****************";
+                cout << "\n\t\t\t\t\tMatches Won : " << won << "[out of " << total_pvp << "]" << endl;
+                cout << "\t\t\t\t\tWin Percentage in Compete for " << username << " is : " << win_percent << endl;
+                cout << "\t\t\t\t\tMaximum winning streak is : " << max_streak << endl;
+                cout << "\t\t\t\t\t\t****************";
             }
             else if (choice == 3)
             {
@@ -312,7 +324,7 @@ public:
             }
             else
             {
-                cout << "Wrong choice selection!" << endl;
+                cout << "\n\t\t\t\t\tWrong choice selection!" << endl;
                 continue;
             }
         }
@@ -340,11 +352,16 @@ public:
     {
         this->user_now = user_now;
         int s, d;
-        cout << "Enter Number of Skill which you want to Practice on : " << endl;
-        cout << "1.Skill1 2.Skill2 3.Skill3 4.Skill4 5.Skill5 " << endl;
+        cout << "\n\t\t\t\t\tEnter Number of Skill which you want to Practice on : " << endl;
+        cout << "\n\t\t\t\t\t\t\t1.Skill1\n\t\t\t\t\t\t\t2.Skill2\n\t\t\t\t\t\t\t3.Skill3\n\t\t\t\t\t\t\t4.Skill4\n\t\t\t\t\t\t\t5.Skill5 " << endl;
+        cout << endl;
+        cout << "\t\t\t\t\tPlease Enter Number of Your Choice : ";
         cin >> s;
-        cout << "Enter Difficulty Level : " << endl;
-        cout << "1.Easy 2.Medium 3.Hard " << endl;
+        cout << endl;
+        cout << "\n\t\t\t\t\tEnter Difficulty Level : " << endl;
+        cout << "\n\t\t\t\t\t\t\t1.Easy\n\t\t\t\t\t\t\t2.Medium\n\t\t\t\t\t\t\t3.Hard " << endl;
+        cout << endl;
+        cout << "\t\t\t\t\tPlease Enter Number of Your Choice : ";
         cin >> d;
         switch (s)
         {
@@ -387,7 +404,6 @@ public:
         if (stat_read[user_now]["practice"].find(skill) != stat_read[user_now]["practice"].end())
         {
             temp = stat_read[user_now]["practice"][skill][difficulty]["solved"].size();
-            cout << temp << endl;
             ans = "set" + to_string(temp + 1);
         }
         if (ans == "")
@@ -399,10 +415,10 @@ public:
 
     void practice_display()
     {
+        system("cls");
         set_to_solve = set_getter_practice(skill, difficulty);
         ifstream pracread("format.json");
         json que_data = json::parse(pracread);
-        cout << set_to_solve << endl;
         json data = que_data[skill][difficulty][set_to_solve]["questions"];
         string que, temp;
         int cnt = 0;
@@ -414,6 +430,7 @@ public:
             cout << "Please Enter Your Answer : " << endl;
             cin >> temp;
             ans.push_back(temp);
+            cout << endl;
         }
         pracread.close();
     }
@@ -434,14 +451,15 @@ public:
             }
             cnt++;
         }
+        cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
         if (score >= 0 && score <= 4)
         {
-            cout << "Your score is " << score << endl;
+            cout << "\nYour score is " << score << endl;
             cout << "Please Go through solutions to check where you went wrong ... " << endl;
         }
         else if (score == 5)
         {
-            cout << "Congratulations ! You were able to solve all questions correctly " << endl;
+            cout << "\nCongratulations ! You were able to solve all questions correctly " << endl;
         }
         practice_result_store();
     }
@@ -469,54 +487,56 @@ private:
 public:
     void compete_info()
     {
-        cout << "\t\t\tPlease Enter Information of Player 1 : " << endl;
-        cout << "\t\t\tAre You a New User ?(Y/N) ";
+        cout << endl;
+        cout << "\t\t\t\t\tPlease Enter Information of Player 1 => " << endl;
+        cout << "\t\t\t\t\tAre You a New User ?(Y/N) ";
         cin >> status;
         if (status == 'Y')
         {
             user_compete_login();
-            cout << "Please Enter Username of Player 1 : ";
+            cout << "\t\t\t\t\tPlease Enter Username of Player 1 : ";
             cin >> user1;
         }
         else if (status == 'N')
         {
-            cout << "Please Enter Username of Player 1 : ";
+            cout << "\t\t\t\t\tPlease Enter Username of Player 1 : ";
             cin >> user1;
-            cout << "Please Enter Password of Player 1 : ";
+            cout << "\t\t\t\t\tPlease Enter Password of Player 1 : ";
             cin >> pass1;
             if (user_check(user1, pass1))
             {
-                cout << "Please Enter Information of Player 2 : " << endl;
-                cout << "Are You a New User ?(Y/N) ";
+                cout << "\n\t\t\t\t\tPlease Enter Information of Player 2 => " << endl;
+                cout << "\t\t\t\t\tAre You a New User ?(Y/N) ";
                 cin >> status;
                 if (status == 'Y')
                 {
                     user_compete_login();
-                    cout << "Please Enter Username of Player 2 : ";
+                    cout << "\t\t\t\t\tPlease Enter Username of Player 2 : ";
                     cin >> user2;
                 }
                 else if (status == 'N')
                 {
-                    cout << "Please Enter Username of Player 2 : ";
+                    cout << "\t\t\t\t\tPlease Enter Username of Player 2 : ";
                     cin >> user2;
-                    cout << "Please Enter Password of Player 2 : ";
+                    cout << "\t\t\t\t\tPlease Enter Password of Player 2 : ";
                     cin >> pass2;
                 }
-                if (user_check(user2, pass2))
+                if (user_check(user2, pass2) && user1 != user2)
                 {
                     random_num = get_random_set(6);
                     set = "set" + to_string(random_num);
+                    cout << endl;
                     compete_display();
                 }
                 else
                 {
-                    cout << "Invalid Credentials" << endl;
+                    cout << "\n\t\t\t\t\tINVALID CREDENTIALS" << endl;
                     compete_info();
                 }
             }
             else
             {
-                cout << "Invalid Credentials" << endl;
+                cout << "\n\t\t\t\t\tINVALID CREDENTIALS" << endl;
                 compete_info();
             }
         }
@@ -524,6 +544,8 @@ public:
 
     void compete_display()
     {
+        system("cls");
+        cout << "Let the Game Begin !" << endl;
         ifstream competedis("compete.json");
         json que_read = json::parse(competedis);
         json data = que_read[set]["questions"];
@@ -583,13 +605,14 @@ public:
             }
             cnt++;
         }
-
+        cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
         if (score1 > score2)
-            cout << user1 << " takes the Win ! Congratulations !" << endl;
+            cout << "\n\t\t\t\t\t" << user1 << " takes the Win ! Congratulations !" << endl;
         else if (score2 > score1)
-            cout << user2 << " takes the Win ! Congratulations !" << endl;
+            cout << "\n\t\t\t\t\t" << user2 << " takes the Win ! Congratulations !" << endl;
         else
-            cout << "Oh! It's a Tie...Well Played Both of You" << endl;
+            cout << "\n\t\t\t\t\t"
+                 << "Oh! It's a Tie...Well Played Both of You" << endl;
         competeans.close();
         compete_result_store(score1, score2);
     }
@@ -628,18 +651,19 @@ int main()
 
     u.user_welcome();
     u.user_login();
-    cout << "__________________________________________________________________________________________________________________________" << endl;
+    cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     cout << "\n";
 
     int choice;
     while (true)
     {
         cout << "\t\t\t\t\t\tWhat do you want to do??" << endl;
-        cout << "\n\t\t\t   1.Practice 2.Compete 3.Contribute 4.Display Statistic 5.Create Test 6.Exit" << endl;
-
-        cout << "\t\t\t\t\t    Please Enter Number of Your Choice   ";
+        cout << "\n\t\t\t\t\t1.Practice\n\t\t\t\t\t2.Compete\n\t\t\t\t\t3.Contribute\n\t\t\t\t\t4.Display Statistic\n\t\t\t\t\t5.Exit" << endl;
+        cout << endl;
+        cout << "\t\t\t\t\t   Please Enter Number of Your Choice : ";
         cin >> choice;
         cout << "\n";
+        cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
 
         if (choice == 1)
         {
@@ -647,32 +671,37 @@ int main()
             p.practise_choice(user_info);
             p.practice_display();
             p.practise_result();
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout << endl;
         }
         else if (choice == 2)
         {
             c.compete_info();
             c.compete_result();
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout << endl;
         }
         else if (choice == 3)
         {
             cout << "Enter . to getting back to main menu" << endl;
             u.user_contribution();
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout << endl;
         }
         else if (choice == 4)
         {
             u.user_statistics();
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout << endl;
         }
         else if (choice == 5)
         {
-        }
-        else if (choice == 6)
-        {
-            cout << "\t\t\t\tThank You! Visit Again..." << endl;
+            cout << "\n\t\t\t\t\tThank You! Visit Again..." << endl;
             break;
         }
         else
         {
-            cout << "Please Enter Correct Choice" << endl;
+            cout << "\n\t\t\t\t\tPlease Enter Correct Choice : " << endl;
             cin >> choice;
         }
     }
