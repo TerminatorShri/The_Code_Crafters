@@ -32,7 +32,7 @@ public:
         cout << "\t\t\t SKILLSPARK : Igniting Interview Success through Practice and Skill Enhancement" << endl;
         cout << "\n";
         cout << "\t\tWelcome to a comprehensive practice platform designed to empower you with enhanced skills before your interviews, facilitating your professional growth & maximizing your chances of success. With a focus on skill development, this project offers you a range of practice exercises and resources to prepare for their upcoming interviews." << endl;
-        cout << "__________________________________________________________________________________________________________________________" << endl;
+        cout << "___________________________________________________________________________________________________________________________________________" << endl;
         cout << "\n";
     }
 
@@ -383,16 +383,12 @@ public:
         ifstream statdis("userdata.json");
         json stat_read = json::parse(statdis), data;
         string ans = "";
-        cout << user_now << endl;
+        int temp;
         if (stat_read[user_now]["practice"].find(skill) != stat_read[user_now]["practice"].end())
         {
-            cout << "Im in" << endl;
-            data = stat_read[username]["practice"][skill];
-            for (auto it = data.begin(); it != data.end(); it++)
-            {
-                string curr_difficulty = it.key();
-                cout << curr_difficulty << endl;
-            }
+            temp = stat_read[user_now]["practice"][skill][difficulty]["solved"].size();
+            cout << temp << endl;
+            ans = "set" + to_string(temp + 1);
         }
         if (ans == "")
         {
@@ -426,7 +422,7 @@ public:
     {
         ifstream ansread("format.json");
         json ans_data = json::parse(ansread);
-        json data = ans_data["Easy"]["set0"]["answers"];
+        json data = ans_data[skill][difficulty][set_to_solve]["answers"];
         string real_ans;
         int cnt = 0;
         for (auto it = data.begin(); it != data.end(); it++)
@@ -447,11 +443,18 @@ public:
         {
             cout << "Congratulations ! You were able to solve all questions correctly " << endl;
         }
-        // practice_result_store();
+        practice_result_store();
     }
 
     void practice_result_store()
     {
+        ifstream data_read("userdata.json");
+        json data = json::parse(data_read);
+        data[user_now]["practice"][skill][difficulty]["solved"].push_back(set_to_solve);
+        data[user_now]["practice"][skill][difficulty]["score"].push_back(score);
+        data_read.close();
+        ofstream data_write("userdata.json");
+        data_write << data;
     }
 };
 
