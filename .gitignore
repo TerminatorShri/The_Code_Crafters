@@ -1,4 +1,1 @@
-usercredentials.txt
-SkillSpark.exe
-usercontri.txt
-.gitignore
+*.exe
