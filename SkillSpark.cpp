@@ -29,10 +29,10 @@ public:
     void user_welcome()
     {
         system("cls");
-        cout << "\t\t\t SKILLSPARK : Igniting Interview Success through Practice and Skill Enhancement" << endl;
+        cout << "\n\t\t\t SKILLSPARK : Igniting Interview Success through Practice and Skill Enhancement" << endl;
         cout << "\n";
         cout << "\t\tWelcome to a comprehensive practice platform designed to empower you with enhanced skills before your interviews, facilitating your professional growth & maximizing your chances of success. With a focus on skill development, this project offers you a range of practice exercises and resources to prepare for their upcoming interviews." << endl;
-        cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+        cout << "___________________________________________________________________________________________________________________________________________" << endl ; 
         cout << "\n";
     }
 
@@ -107,7 +107,7 @@ public:
                 }
                 if (flag1 == 1)
                 {
-                    cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                    cout << "___________________________________________________________________________________________________________________________________________" << endl;
                     cout << "\n\t\t\t\t\t\t  Welcome Back >>>>" << username << "<<<<" << endl;
                     break;
                 }
@@ -137,6 +137,7 @@ public:
 
     void user_contribution()
     {
+        cout << endl;
         string time = get_time();
         ofstream qstore("usercontri.txt", ios::app);
         qstore << username << " " << time;
@@ -419,7 +420,7 @@ public:
         set_to_solve = set_getter_practice(skill, difficulty);
         ifstream pracread("format.json");
         json que_data = json::parse(pracread);
-        json data = que_data[skill][difficulty][set_to_solve]["questions"];
+        json data = que_data["skill1"]["Easy"]["set1"]["questions"];
         string que, temp;
         int cnt = 0;
         cout << "Let's start with your test" << endl;
@@ -439,7 +440,7 @@ public:
     {
         ifstream ansread("format.json");
         json ans_data = json::parse(ansread);
-        json data = ans_data[skill][difficulty][set_to_solve]["answers"];
+        json data = ans_data["skill1"]["Easy"]["set1"]["answers"];
         string real_ans;
         int cnt = 0;
         for (auto it = data.begin(); it != data.end(); it++)
@@ -451,7 +452,7 @@ public:
             }
             cnt++;
         }
-        cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+        cout << "___________________________________________________________________________________________________________________________________________" << endl;
         if (score >= 0 && score <= 4)
         {
             cout << "\nYour score is " << score << endl;
@@ -605,7 +606,7 @@ public:
             }
             cnt++;
         }
-        cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+        cout << "___________________________________________________________________________________________________________________________________________" << endl;
         if (score1 > score2)
             cout << "\n\t\t\t\t\t" << user1 << " takes the Win ! Congratulations !" << endl;
         else if (score2 > score1)
@@ -651,19 +652,19 @@ int main()
 
     u.user_welcome();
     u.user_login();
-    cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    cout << "___________________________________________________________________________________________________________________________________________" << endl;
     cout << "\n";
 
     int choice;
     while (true)
     {
-        cout << "\t\t\t\t\t\tWhat do you want to do??" << endl;
+        cout << "\n\t\t\t\t\t\tWhat do you want to do??" << endl;
         cout << "\n\t\t\t\t\t1.Practice\n\t\t\t\t\t2.Compete\n\t\t\t\t\t3.Contribute\n\t\t\t\t\t4.Display Statistic\n\t\t\t\t\t5.Exit" << endl;
         cout << endl;
         cout << "\t\t\t\t\t   Please Enter Number of Your Choice : ";
         cin >> choice;
         cout << "\n";
-        cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+        cout << "___________________________________________________________________________________________________________________________________________" << endl;
 
         if (choice == 1)
         {
@@ -671,27 +672,27 @@ int main()
             p.practise_choice(user_info);
             p.practice_display();
             p.practise_result();
-            cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout << "___________________________________________________________________________________________________________________________________________" << endl;
             cout << endl;
         }
         else if (choice == 2)
         {
             c.compete_info();
             c.compete_result();
-            cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout << "___________________________________________________________________________________________________________________________________________" << endl;
             cout << endl;
         }
         else if (choice == 3)
         {
             cout << "Enter . to getting back to main menu" << endl;
             u.user_contribution();
-            cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout << "___________________________________________________________________________________________________________________________________________" << endl;
             cout << endl;
         }
         else if (choice == 4)
         {
             u.user_statistics();
-            cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            cout << "___________________________________________________________________________________________________________________________________________" << endl;
             cout << endl;
         }
         else if (choice == 5)
